@@ -9,5 +9,8 @@
   "keywords": [],
   "author": "Matheus Arakaki",
   "license": "ISC",
-  "description": "Ticket support manager API"
+  "description": "Ticket support manager API",
+  "dependencies": {
+    "dayjs": "^1.11.13"
+  }
 }

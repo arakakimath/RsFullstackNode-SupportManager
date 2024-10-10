@@ -1,4 +1,7 @@
 import { routes } from "../routes/index.js";
+import { Database } from "../database/database.js";
+
+const database = new Database()
 
 export function routeHandler(request, response){
   const route = routes.find((route) => {
