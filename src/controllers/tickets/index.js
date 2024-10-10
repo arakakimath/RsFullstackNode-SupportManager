@@ -1,7 +1,9 @@
 export function index({ request, response, database }) {
   const { status, user_name } = request.query
+  const { id } = request.params
 
   const filters = {}
+  if (id) filters.id = id 
   if (status)  
     filters.status = status
   if (user_name)  

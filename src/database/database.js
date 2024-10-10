@@ -35,7 +35,6 @@ export class Database {
 
     if (filters) {
       data = data.filter((ticket) => {
-        console.log(Object.entries(filters))
         return Object.entries(filters).reduce( (condition, [key, value]) => {
           return ticket[key].toLowerCase().includes(value.toLowerCase()) && condition
         }, true)
@@ -44,4 +43,17 @@ export class Database {
 
     return data
   }
+
+  update(table, id, data) {
+    const index = this.#database[table].findIndex((item) => item.id === id)
+
+    if (index) {
+      this.#database[table][index] = {
+        ...this.#database[table][index], ...data
+      }
+
+      this.#persist()
+    }
+  }
+
 }
