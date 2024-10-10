@@ -1,59 +1,59 @@
-import fs from "node:fs/promises"
+import fs from "node:fs/promises";
 
-const DATABASE_PATH = new URL("db.json", import.meta.url)
+const DATABASE_PATH = new URL("db.json", import.meta.url);
 
 export class Database {
-  #database = {}
+  #database = {};
 
   constructor() {
     fs.readFile(DATABASE_PATH, "utf8")
-    .then((data) => {
-      this.#database = JSON.parse(data)
-    })
-    .catch(() => {
-      this.#persist()
-    })
+      .then((data) => {
+        this.#database = JSON.parse(data);
+      })
+      .catch(() => {
+        this.#persist();
+      });
   }
 
   #persist() {
-    fs.writeFile(DATABASE_PATH, JSON.stringify(this.#database))
+    fs.writeFile(DATABASE_PATH, JSON.stringify(this.#database));
   }
 
   insert(table, data) {
-    if(Array.isArray(this.#database[table]))
-      this.#database[table].push(data)
-    else
-      this.#database[table] = [data]
+    if (Array.isArray(this.#database[table])) this.#database[table].push(data);
+    else this.#database[table] = [data];
 
-    this.#persist()
+    this.#persist();
 
-    return data
-  } 
+    return data;
+  }
 
   select(table, filters) {
-    let data = this.#database[table] ?? []
+    let data = this.#database[table] ?? [];
 
     if (filters) {
       data = data.filter((ticket) => {
-        return Object.entries(filters).reduce( (condition, [key, value]) => {
-          return ticket[key].toLowerCase().includes(value.toLowerCase()) && condition
-        }, true)
-      })
+        return Object.entries(filters).reduce((condition, [key, value]) => {
+          return (
+            ticket[key].toLowerCase().includes(value.toLowerCase()) && condition
+          );
+        }, true);
+      });
     }
 
-    return data
+    return data;
   }
 
   update(table, id, data) {
-    const index = this.#database[table].findIndex((item) => item.id === id)
+    const index = this.#database[table].findIndex((item) => item.id === id);
 
-    if (index) {
+    if (index > -1) {
       this.#database[table][index] = {
-        ...this.#database[table][index], ...data
-      }
-
-      this.#persist()
+        ...this.#database[table][index],
+        ...data,
+      };
+      console.log(this.#database[table][index],data)
+      this.#persist();
     }
   }
-
 }
