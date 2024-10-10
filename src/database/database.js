@@ -30,8 +30,18 @@ export class Database {
     return data
   } 
 
-  select(table) {
+  select(table, filters) {
     let data = this.#database[table] ?? []
+
+    if (filters) {
+      data = data.filter((ticket) => {
+        console.log(Object.entries(filters))
+        return Object.entries(filters).reduce( (condition, [key, value]) => {
+          return ticket[key].toLowerCase().includes(value.toLowerCase()) && condition
+        }, true)
+      })
+    }
+
     return data
   }
 }
