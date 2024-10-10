@@ -1,0 +1,13 @@
+{
+  "name": "supportmanager",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [],
+  "author": "Matheus Arakaki",
+  "license": "ISC",
+  "description": "Ticket support manager API"
+}
