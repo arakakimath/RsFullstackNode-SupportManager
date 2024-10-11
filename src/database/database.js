@@ -52,8 +52,23 @@ export class Database {
         ...this.#database[table][index],
         ...data,
       };
-      console.log(this.#database[table][index],data)
       this.#persist();
+
+      return true
     }
+    else return false
   }
+
+  delete(table, id) {
+    const index = this.#database[table].findIndex((item) => item.id === id);
+
+    if (index > -1) {
+      this.#database[table].splice(index, 1)
+      this.#persist()
+
+      return true
+    }
+    else return false
+  }
+
 }
